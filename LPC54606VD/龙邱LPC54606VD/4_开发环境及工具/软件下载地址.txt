@@ -1,0 +1,8 @@
+JLINK 驱动 6.14 版本：
+链接： https://pan.baidu.com/s/1PZ5Mw5zHptyqSrJe0mC2Jg 密码： 292w
+
+IAR 安装教程 安装8.2以上版本即可
+连接： https://www.cnblogs.com/main2019/p/11658486.html
+
+MDK 5.25以上版本 官网自己下载即可
+http://www2.keil.com/mdk5
