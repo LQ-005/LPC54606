@@ -130,25 +130,25 @@
 
 ## LPC54606例程讲解
 >注意 所有例程公用一套底层库文件，所以为了防止意外更改底层库，将底层库文件属性设置为只读，如果想要修改，将文件属性设置只读去掉即可。
-* 1.LED灯测试例程
-* 2.按键测试例程
-* 3.按键外部中断测试例程
-* 4.MRT定时器中断测试例程 MRT定时器最大90ms
-* 5.RIT定时器中断测试例程
-* 6.串口 打印测试
-* 7.串口 printf 打印测试
-* 8.systick 系统计时器测试
-* 9.oled 显示测试
-* 10.tft1.8 寸屏 显示测试
-* 11.adc 采集测试
-* 12.看门狗测试例程
-* 13.4路电机测试
-* 14.舵机测试 SD5/S3010均可使用 
-* 15.编码器读取测试
-* 16.MPU6050/ICM20602  IIC读取原始数据测试
-* 17.九轴 IIC 读取原始数据测试
-* 18.VL53 激光测距模块测试
-* 19.超声波测距模块测试
+* [1.LED灯测试例程](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/1_LED)
+* [2.按键测试例程](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/2_KEY)
+* [3.按键外部中断测试例程](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/3_EXTI)
+* [4.MRT定时器中断测试例程](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/4_MRT) MRT定时器最大90ms
+* [5.RIT定时器中断测试例程](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/5_RIT)
+* [6.串口 打印测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/6_UART)
+* [7.串口 printf 打印测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/7_printf)
+* [8.systick 系统计时器测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/8_SYSTICK)
+* [9.oled 显示测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/9_OLED)
+* [10.tft1.8 寸屏 显示测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/10_TFT18)
+* [11.adc 采集测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/11_ADC)
+* [12.看门狗测试例程](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/12_WDOG)
+* [13.4路电机测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/13_MOTOR)
+* [14.舵机测试 SD5/S3010均可使用](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/14_SERVO)
+* [15.编码器读取测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/15_ENC)
+* [16.MPU6050/ICM20602  IIC读取原始数据测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/16_MPU6050-ICM20602)
+* [17.九轴 IIC 读取原始数据测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/17_9AX)
+* [18.VL53 激光测距模块测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/18_VL53)
+* [19.超声波测距模块测试](https://gitee.com/LQ-RDC/LPC54606/tree/master/LPC54606_DOC/19_HCSR04)
 * 20.ICM20602 SPI方式读取原始数据
 * 21.EEPROM 掉电保存数据测试
 * 22.串口+DMA收发测试 
