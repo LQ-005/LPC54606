@@ -44,7 +44,7 @@
 #define USE_HAL_IIC  3    /* 硬件IIC */
 
 /* MPU6050/ICM20602/龙邱九轴 选择使用?IIC */
-#define IMU_USE_SELECT  USE_HAL_IIC
+#define IMU_USE_SELECT  USE_SOFT_IIC
 
 /* VL53 使用？IIC */
 //#define VL53_USE_SELECT USE_SOFT_IIC

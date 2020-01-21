@@ -16,7 +16,7 @@ extern void delayms(uint16_t ms);
 #define Acc_Gain  	0.0001220f				//加速度变成G (初始化加速度满量程-+4g LSBa = 2*4/65535.0)
 #define Gyro_Gain 	0.0609756f				//角速度变成度 (初始化陀螺仪满量程+-2000 LSBg = 2*2000/65535.0)
 #define Gyro_Gr	    0.0010641f			    //角速度变成弧度(3.1415/180 * LSBg)   
-#define VAR         0.001f                  //1/方差
+#define VAR         0.1f                    //1/方差
 
 
 
@@ -101,14 +101,30 @@ void ins_calibration(void)
 {  
     
     vector3f_t _acc_var;           //存放加计方差
-    vector3i_t _acc_vector[500];   //存放加计读取的原始数据
-    vector3i_t _gyro_vector[500];  //存放角速度计读取的原始数据
+    vector3i_t _acc_vector[100];   //存放加计读取的原始数据
+    vector3i_t _gyro_vector[100];  //存放角速度计读取的原始数据
     vector3f_t _gyro_average;      //存放角速度计平均值
     vector3f_t _acc_average;       //存放加计平均值
     vector3f_t _gyro_var;          //存放角速度计方差
     
     do{
-        for(int i = 0; i < 500; i++)
+		_acc_var.x = 0;
+	    _acc_var.y = 0;
+	    _acc_var.z = 0;
+	    
+	    _gyro_average.x = 0;
+	    _gyro_average.y = 0;
+	    _gyro_average.z = 0;
+	    
+	    _acc_average.x = 0;
+	    _acc_average.y = 0;
+	    _acc_average.z = 0;
+	    
+	    _gyro_var.x = 0;
+	    _gyro_var.y = 0;
+	    _gyro_var.z = 0;
+		
+        for(int i = 0; i < 100; i++)
         {
 #ifdef IMU_USE_SELECT
             /* 获取传感器原始数据 */
@@ -131,30 +147,30 @@ void ins_calibration(void)
                                  &_gyro_vector[i].x,&_gyro_vector[i].y,&_gyro_vector[i].z);	  
             }
 #endif   
-            _acc_average.x  += _acc_vector[i].x/500.0f;
-            _acc_average.y  += _acc_vector[i].y/500.0f;
-            _acc_average.z  += (_acc_vector[i].z - 8192)/500.0f; 
+            _acc_average.x  += _acc_vector[i].x/100.0f;
+            _acc_average.y  += _acc_vector[i].y/100.0f;
+            _acc_average.z  += (_acc_vector[i].z - 8192)/100.0f; 
             
-            _gyro_average.x += _gyro_vector[i].x/500.0f;
-            _gyro_average.y += _gyro_vector[i].y/500.0f;
-            _gyro_average.z += _gyro_vector[i].z/500.0f;
+            _gyro_average.x += _gyro_vector[i].x/100.0f;
+            _gyro_average.y += _gyro_vector[i].y/100.0f;
+            _gyro_average.z += _gyro_vector[i].z/100.0f;
             
             delayms(2);
-            if(i % 50 == 0)
+            if(i % 20 == 0)
             {
                 LED_ColorReverse(red);     //红灯闪烁
             }
         }
         /* 计算方差 确保校准的时候是静止状态的 */
-        for(int j = 0; j < 500; j++)
+        for(int j = 0; j < 100; j++)
         {
-            _acc_var.x +=  0.002f * (_acc_vector[j].x - _acc_average.x) * (_acc_vector[j].x - _acc_average.x);
-            _acc_var.y +=  0.002f * (_acc_vector[j].y - _acc_average.y) * (_acc_vector[j].y - _acc_average.y);
-            _acc_var.z +=  0.002f * (_acc_vector[j].z - _acc_average.z) * (_acc_vector[j].z - _acc_average.z);
+            _acc_var.x +=  0.01f * (_acc_vector[j].x - _acc_average.x) * (_acc_vector[j].x - _acc_average.x);
+            _acc_var.y +=  0.01f * (_acc_vector[j].y - _acc_average.y) * (_acc_vector[j].y - _acc_average.y);
+            _acc_var.z +=  0.01f * (_acc_vector[j].z - _acc_average.z) * (_acc_vector[j].z - _acc_average.z);
             
-            _gyro_var.x +=  0.002f * (_gyro_vector[j].x - _gyro_average.x) * (_gyro_vector[j].x - _gyro_average.x);
-            _gyro_var.y +=  0.002f * (_gyro_vector[j].y - _gyro_average.y) * (_gyro_vector[j].y - _gyro_average.y);
-            _gyro_var.z +=  0.002f * (_gyro_vector[j].z - _gyro_average.z) * (_gyro_vector[j].z - _gyro_average.z);
+            _gyro_var.x +=  0.01f * (_gyro_vector[j].x - _gyro_average.x) * (_gyro_vector[j].x - _gyro_average.x);
+            _gyro_var.y +=  0.01f * (_gyro_vector[j].y - _gyro_average.y) * (_gyro_vector[j].y - _gyro_average.y);
+            _gyro_var.z +=  0.01f * (_gyro_vector[j].z - _gyro_average.z) * (_gyro_vector[j].z - _gyro_average.z);
         }
         
         /* 快速计算 1/Sqrt(x) */

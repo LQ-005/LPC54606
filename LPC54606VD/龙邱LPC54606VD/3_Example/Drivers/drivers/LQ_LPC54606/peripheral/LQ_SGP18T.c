@@ -21,8 +21,30 @@
 #include "LQ_SGP18T.h"
 #include "stdio.h"
 
-/** 声明外部延时函数 */
-extern void delayms(uint16_t ms);
+/**
+  * @brief    不精确延时
+  *
+  * @param    无
+  *
+  * @return   无
+  *
+  * @note     无
+  *
+  * @example  lq_tft_delayms(100);
+  *
+  * @date     2019/4/22 星期一
+*/
+static void lq_tft_delayms(uint16_t ms)
+{
+	volatile uint32_t i = 0;
+	while(ms--)
+	{
+		for (i = 0; i < 15000; ++i)
+		{
+			__asm("NOP"); /* delay */
+		}
+	}	
+}
 
 
 
@@ -41,7 +63,7 @@ extern void delayms(uint16_t ms);
   *
   * @note     如果修改管脚 需要修改初始化的管脚 
   *
-  * @see      LCD_Init();
+  * @see      TFTSPI_Init(1);
   *
   * @date     2019/6/13 星期四
   */
@@ -55,11 +77,11 @@ void TFTSPI_Init(uint8_t type)
 	PIN_InitConfig(P1_18, PIN_MODE_OUTPUT, 0);
   
   TFTSPI_RST=0;
-  delayms(50);                   
+  lq_tft_delayms(50);                   
   TFTSPI_RST=1;
-  delayms(50);   
+  lq_tft_delayms(50);   
   TFTSPI_Write_Cmd(0x11);       		  	//关闭睡眠，振荡器工作
-  delayms(10);  
+  lq_tft_delayms(10);  
   TFTSPI_Write_Cmd(0x3a);       		  	//每次传送16位数据(VIPF3-0=0101)，每个像素16位(IFPF2-0=101)
   TFTSPI_Write_Byte(0x55);	
   TFTSPI_Write_Cmd(0x26);       		  	
@@ -1206,7 +1228,7 @@ void TFTSPI_P8X16Str(uint8_t x, uint8_t y, char *s_dat,uint16_t word_color,uint1
 
 
 /*!
-  * @brief    液晶汉字字符串输出(8*16字体)
+  * @brief    液晶汉字字符串输出(12*16字体)
   *
   * @param    x: 0 - 7	(行)
   * @param    y: 0 -12	(列)
@@ -1515,16 +1537,17 @@ void TFTSPI_Test(void)
   
   TFTSPI_Init(0);        //LCD初始化  0:横屏  1：竖屏
   TFTSPI_CLS(u16BLUE);   //蓝色屏幕	
-  TFTSPI_Show_Logo(0,37);//显示龙邱LOG  
+  TFTSPI_Show_Logo(0,37);//显示龙邱LOG   
   TFTSPI_P16x16Str(0,0,"北京龙邱智能科技",u16RED,u16BLUE);		//字符串显示
-  TFTSPI_P8X16Str(0,1,"Long Qiu i.s.t.",u16WHITE,u16BLACK);		//字符串显示  
+  TFTSPI_P8X16Str(0,1,"Long Qiu i.s.t.",u16WHITE,u16BLACK);		//字符串显示 
+
   char txt[32];
   float count = 1.0;
   while(1)
   {
       sprintf(txt, "variate: %.2f", count);                     //将变量填充到字符串的对应位置，并将字符串存放到txt[]中
       TFTSPI_P8X16Str(0, 6, txt, u16RED, u16BLUE);              //将txt中 内容显示出来
-      delayms(1000);
+      lq_tft_delayms(1000);
       count *= (float)1.1;      
    }
 }

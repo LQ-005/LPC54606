@@ -58,7 +58,7 @@ void systime_init(void)
 	SysTick_Config((SystemCoreClock / 1000) * timer.ms_per_tick );   //开启systick中断
     
 //    //优先级配置 抢占优先级1  子优先级2   越小优先级越高  抢占优先级可打断别的中断
-//    NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1,2));
+//    NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),1,0));
 }
 
 

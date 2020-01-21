@@ -6,3 +6,5 @@ IAR 安装教程 安装8.2以上版本即可
 
 MDK 5.25以上版本 官网自己下载即可
 http://www2.keil.com/mdk5
+或者直接复制下面网址到浏览器
+http://www.keil.com/fid/izv0gywb9c9j1w35bkw1auhmp1liu2p1lijw11/files/eval/mdk528a.exe

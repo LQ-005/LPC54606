@@ -115,6 +115,21 @@ uint16_t ADC_ReadMean(ADCn_Ch channel, uint8_t count);
   */
 void ADC_PinInit(ADCn_Ch channel);
 
+/*!
+  * @brief    ADC延时
+  *
+  * @param    无
+  *
+  * @return   无
+  *
+  * @note     内部调用
+  *
+  * @see      ADC_Delay();  
+  *
+  * @date     2019/10/21 星期一
+  */
+void ADC_Delay(void);
+
 #endif
 
 

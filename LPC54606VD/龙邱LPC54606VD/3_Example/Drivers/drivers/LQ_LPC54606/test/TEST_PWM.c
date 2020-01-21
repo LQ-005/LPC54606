@@ -9,7 +9,7 @@
   *
   * @note     
   *
-  * @version  V1.0   2019/11/27  修改硬件SPI初始化函数
+  * @version  V1.0   2019/11/27  修改注释
   *
   * @par URL  http://shop36265907.taobao.com
   *           http://www.lqist.cn
@@ -90,8 +90,6 @@ void TEST_Servo(void)
     {      
         switch(KEY_Read(1))  //检测按键 mode:0单按，mode:1连按
         {
-            case 0:
-            break;
             case 1:
                 servopwm -= 10;   
 				if(servopwm < 650) servopwm = 650;     //限幅，可自行修改

@@ -120,7 +120,7 @@ uint8_t PIN_Read(GPIO_Name_t pin)
   *
   * @note     使用前先初始化IO
   *
-  * @example  PIN_Write(P0_0, 1);//P0_0置为高电平
+  * @see      PIN_Write(P0_0, 1);//P0_0置为高电平
   *
   * @date     2019/8/19 星期一
   */
@@ -142,7 +142,7 @@ void PIN_Write(GPIO_Name_t pin, uint8_t output)
   *
   * @note     使用前请先初始化
   *
-  * @example  PIN_Dir(P0_0, 1);//P0_0设置为输出
+  * @see      PIN_Dir(P0_0, 1);//P0_0设置为输出
   *
   * @date     2019/8/19 星期一
   */
@@ -188,10 +188,10 @@ void PIN_Reverse(GPIO_Name_t pin)
   *
   * @note     LPC54606一共有8个外部中断，所有管脚都可以连接到这8个外部中断上 
   *
-  * @example  PIN_Exti(P0_0, 0, PIN_IRQ_MODE_FALLING);//配置P0_0 下降沿触发中断
-  * @example  优先级配置 抢占优先级5  子优先级0   越小优先级越高  抢占优先级可打断别的中断
-  * @example  NVIC_SetPriority(PIN_INT0_IRQn,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),5,0));
-  * @example  EnableIRQ(PIN_INT0_IRQn);			          //使能外部中断通道 0   
+  * @see      PIN_Exti(P0_0, 0, PIN_IRQ_MODE_FALLING);//配置P0_0 下降沿触发中断
+  * @see      优先级配置 抢占优先级5  子优先级0   越小优先级越高  抢占优先级可打断别的中断
+  * @see      NVIC_SetPriority(PIN_INT0_IRQn,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),5,0));
+  * @see      EnableIRQ(PIN_INT0_IRQn);			          //使能外部中断通道 0   
   *
   * @date     2019/8/19 星期一
   */

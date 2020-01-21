@@ -9,7 +9,7 @@
   *
   * @note     
   *
-  * @version  V1.0   2019/11/27  修改硬件SPI初始化函数
+  * @version  V1.0   2019/11/27  修改注释
   *
   * @par URL  http://shop36265907.taobao.com
   *           http://www.lqist.cn

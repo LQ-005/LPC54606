@@ -85,9 +85,7 @@ void CAMERA_Init(uint8_t fps);
   *
   * @return   无
   *
-  * @note     LPC54606 有32KB的I&D SRAM  相比普通的SRAM速度快很多 
-  * @note     在分散加载文件里 默认将32K的I&D SRAM分成16K的栈区和16K的RamFunction
-  * @note     可以使用RAMFUNCTION_SECTION_CODE()将关键部分代码放到I&D SRAM里面加速 实测速度会快一倍
+  * @note     无
   *
   * @see      Get_Use_Image();
   *

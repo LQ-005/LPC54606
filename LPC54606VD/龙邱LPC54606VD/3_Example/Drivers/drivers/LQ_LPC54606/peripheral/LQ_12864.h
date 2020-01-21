@@ -188,21 +188,23 @@ void LCD_P14x16Str(unsigned char x,unsigned char y, char ch[]);
 void LCD_Print(unsigned char x, unsigned char y,  char ch[]);
 
 /*!
-  * @brief    显示BMP图片128×64
+  * @brief    显示BMP图片 最大 128×64
   *
-  * @param    x  : 0-127   
-  * @param    y  : 0-6
-  * @param    ch : 要显示的字符串
+  * @param    x0  : 0-127   左上角坐标（x0,y0）
+  * @param    y0  : 0-63
+  * @param    wide: 1-127   图片宽度
+  * @param    high: 1-64    图片高度
+  * @param    bmp : 要显示的图片
   *
   * @return   无
   *
   * @note     图片需要用软件转化
   *
-  * @see      
+  * @see      LCD_Show_BMP(0, 0, 104, 64, longqiu104x64); //画龙邱loge
   *
   * @date     2019/6/13 星期四
   */
-void LCD_Show_BMP(unsigned char x0,unsigned char y0,unsigned char x1,unsigned char y1,unsigned char * bmp);
+void LCD_Show_BMP(unsigned char x0,unsigned char y0,unsigned char wide,unsigned char high,const uint8_t * bmp);
 
 /*!
   * @brief    显示龙邱图片128×64
@@ -243,7 +245,7 @@ void LCD_Show_Frame80(void);
   *
   * @note     无
   *
-  * @see      LCD_Show_Frame80();
+  * @see      LCD_Show_Frame94();
   *
   * @date     2019/6/13 星期四
   */

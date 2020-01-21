@@ -52,7 +52,7 @@ extern char gImage_title2[5152];
   *
   * @note     如果修改管脚 需要修改初始化的管脚 
   *
-  * @see      LCD_Init();
+  * @see      TFTSPI_Init(1);
   *
   * @date     2019/6/13 星期四
   */

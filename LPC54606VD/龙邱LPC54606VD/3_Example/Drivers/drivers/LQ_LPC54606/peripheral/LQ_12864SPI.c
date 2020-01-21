@@ -18,8 +18,7 @@
   */ 
 #include "LQ_12864.h"
 #include "LQ_GPIO.h"
-/** 声明外部延时函数 */
-extern void delayms(uint16_t ms);
+
 
 #define LCD_DC	PT1_6     /*!< OLED DC管脚 */ 
 #define LCD_RST	PT1_19    /*!< OLED RST管脚 */
@@ -30,6 +29,31 @@ extern void delayms(uint16_t ms);
 #define X_WIDTH 132
 #define Y_WIDTH 64
 
+
+/**
+  * @brief    不精确延时
+  *
+  * @param    无
+  *
+  * @return   无
+  *
+  * @note     无
+  *
+  * @example  lq_lcd_delayms(100);
+  *
+  * @date     2019/4/22 星期一
+*/
+static void lq_lcd_delayms(uint16_t ms)
+{
+	volatile uint32_t i = 0;
+	while(ms--)
+	{
+		for (i = 0; i < 15000; ++i)
+		{
+			__asm("NOP"); /* delay */
+		}
+	}	
+}
 
 /*!
   * @brief    OLED初始化
@@ -55,7 +79,7 @@ void LCD_Init(void)
     LCD_CK=1;
     //LCD_CS=1;	//预制SLK和SS为高电平               
     LCD_RST=0;
-    delayms(50);
+    lq_lcd_delayms(50);
     LCD_RST=1;
     
     LCD_WrCmd(0xae);//--turn off oled panel
@@ -505,7 +529,7 @@ void LCD_WrCmd(unsigned char cmd)
   *
   * @return   无
   *
-  * @note     无
+  * @note     左上角为0,0  右下角 127,63
   *
   * @see      内部调用
   *
@@ -649,14 +673,14 @@ void LCD_Rectangle(unsigned char x1,unsigned char y1,unsigned char x2,unsigned c
     {
         LCD_WrDat(0x01<<(y1%8)); 			
         if(gif == 1) 	
-            delayms(10);
+            lq_lcd_delayms(10);
     }  
     LCD_Set_Pos(x1,y2>>3);
     for(n=x1;n<=x2;n++)
     {
         LCD_WrDat(0x01<<(y2%8)); 			
         if(gif == 1) 	
-            delayms(10);
+            lq_lcd_delayms(10);
     }
     
     for(n = y1>>3; n <= y2>>3; n++)
@@ -664,7 +688,7 @@ void LCD_Rectangle(unsigned char x1,unsigned char y1,unsigned char x2,unsigned c
         LCD_Set_Pos(x1, n);
         LCD_WrDat(0xff); 			
         if(gif == 1) 	
-            delayms(50);
+            lq_lcd_delayms(50);
     }
     
     for(n = y1>>3; n <= y2>>3; n++)
@@ -672,7 +696,7 @@ void LCD_Rectangle(unsigned char x1,unsigned char y1,unsigned char x2,unsigned c
         LCD_Set_Pos(x2, n);
         LCD_WrDat(0xff); 			
         if(gif == 1) 	
-            delayms(50);
+            lq_lcd_delayms(50);
     }
 }  
 
@@ -857,28 +881,34 @@ void LCD_Print(unsigned char x, unsigned char y,  char ch[])
 
 
 /*!
-  * @brief    显示BMP图片128×64
+  * @brief    显示BMP图片 最大 128×64
   *
-  * @param    x  : 0-127   
-  * @param    y  : 0-6
-  * @param    ch : 要显示的字符串
+  * @param    x0  : 0-127   左上角坐标（x0,y0）
+  * @param    y0  : 0-63
+  * @param    wide: 1-127   图片宽度
+  * @param    high: 1-64    图片高度
+  * @param    bmp : 要显示的图片
   *
   * @return   无
   *
   * @note     图片需要用软件转化
   *
-  * @see      
+  * @see      LCD_Show_BMP(0, 0, 104, 64, longqiu104x64); //画龙邱loge
   *
   * @date     2019/6/13 星期四
   */
-void LCD_Show_BMP(unsigned char x0,unsigned char y0,unsigned char x1,unsigned char y1,unsigned char * bmp)
+void LCD_Show_BMP(unsigned char x0,unsigned char y0,unsigned char wide,unsigned char high,const uint8_t * bmp)
 { 	
     unsigned int ii=0;
     unsigned char x,y;
-    
-    if(y1%8==0) y=y1/8;      
-    else y=y1/8+1;
-    for(y=y0;y<=y1;y++)
+	unsigned char x1,y1;
+	if(wide + x0 > 128 || high + y0 > 64)
+	{
+		return;  //超出显示范围
+	}
+	y1 = (y0+high-1)/8;
+	x1 = x0 + wide;
+    for(y=y0/8;y<=y1;y++)
     {
         LCD_Set_Pos(x0,y);				
         for(x=x0;x<x1;x++)
@@ -975,7 +1005,7 @@ void LCD_Show_Frame80(void)
   *
   * @note     无
   *
-  * @see      LCD_Show_Frame80();
+  * @see      LCD_Show_Frame94();
   *
   * @date     2019/6/13 星期四
   */
@@ -1060,6 +1090,7 @@ void LCD_Road(uint16_t high, uint16_t wide, uint8_t *Pixle)
 }
 
 
+
 /**
   * @brief    OLED 测试函数
   *
@@ -1077,32 +1108,33 @@ void Test_OLED(void)
 {      
     LCD_Init();                          //LCD初始化 
     LCD_Show_LQLogo();                   //显示LOGO
-    delayms(2000);  
+    lq_lcd_delayms(2000);  
     LCD_CLS();       
   
     while (1)
     {  
-        LCD_P6x8Str(0,0,"OLED 3.");         //字符串
+        LCD_P6x8Str(0,7,"OLED 3.");         //字符串
+		lq_lcd_delayms(1000);
         LCD_Rectangle(0, 0, 127,62,0);      //绘制矩形
         LCD_Rectangle(24,8,88,55,1);
 		LCD_Rectangle(32,16,80,47,1);
 		LCD_Rectangle(40,24,72,39,1);
-        delayms(1000);
+        lq_lcd_delayms(1000);
         LCD_CLS();                          //清屏
         
         LCD_P8x16Str(0, 0,"OLED 4.");       //显示字符串
-//        LCD_P14x16Str(0,4,"北京龙邱");    //显示汉字
-//        LCD_Print(0,6,"北京龙邱 OLED.");  //显示汉字+字符
+        LCD_P14x16Str(0,4,"北京龙邱");    //显示汉字
+        LCD_Print(0,6,"北京龙邱 OLED.");  //显示汉字+字符
         LCD_PutPixel(120,60);
-        delayms(1000);
+        lq_lcd_delayms(1000);
         LCD_CLS();                          //清屏
         
         LCD_Fill();                         //填充
-        delayms(1000);
+        lq_lcd_delayms(1000);
         LCD_CLS();                          //清屏 
         
         //延时
-        delayms(50);
+        lq_lcd_delayms(50);
     }
 }
 

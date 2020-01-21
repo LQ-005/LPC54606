@@ -10,6 +10,7 @@
   * @note     无
   *
   * @version  V1.1  2019/12/06 优化注释 Doxygen
+                    2020/01/06 优化ADC_ReadMean函数
   *
   * @par URL  http://shop36265907.taobao.com
   *           http://www.lqist.cn
@@ -68,8 +69,8 @@ void ADC_InitConfig(ADCn_Ch channel, ADC_nbit bit)
     /* 选择ADC时钟源 */
     adcConfigStruct.clockMode = kADC_ClockSynchronousMode; /* Using sync clock source. */
     
-    /* 配置ADC分配系数 ADC时钟不要超过80M*/
-    adcConfigStruct.clockDividerNumber = 3;                /* The divider for sync clock is ?. */
+    /* 配置ADC分配系数 */
+    adcConfigStruct.clockDividerNumber = 2;                /* The divider for sync clock is ?. */
     
     /* 设置ADC分辨率 */
     adcConfigStruct.resolution =(adc_resolution_t)bit;
@@ -121,7 +122,7 @@ uint16_t ADC_Read(ADCn_Ch channel)
     
     /* 启动转换 */
     ADC_DoSoftwareTriggerConvSeqA(ADC0);  
-    
+     
     /* 等待转换完成 */
     while(!ADC_GetChannelConversionResult(ADC0, channel, &adcResultInfoStruct));
     
@@ -151,6 +152,10 @@ uint16_t ADC_ReadMean(ADCn_Ch channel, uint8_t count)
     for(int i = 0; i < count; i++)
     {
         sum += ADC_Read(channel);
+
+		/* 必要延时 连续读取同一通道ADC时，需要加一个短暂的延时 */
+		ADC_Delay();
+
     }
     return sum/count;
 }
@@ -202,4 +207,29 @@ void ADC_PinInit(ADCn_Ch channel)
       default:
         assert(0);   //ADC管脚选择有误
     }
+}
+
+/* 告诉编译器 不要优化 */
+#if (defined(__ICCARM__))
+#pragma optimize=none
+#endif
+/*!
+  * @brief    ADC延时
+  *
+  * @param    无
+  *
+  * @return   无
+  *
+  * @note     内部调用
+  *
+  * @see      ADC_Delay();  
+  *
+  * @date     2019/10/21 星期一
+  */
+void ADC_Delay(void)
+{
+    for (volatile int i = 0; i < 15; ++i)
+	{
+		__asm("NOP"); /* delay */
+	}
 }

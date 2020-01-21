@@ -36,15 +36,12 @@
  void Test_WDOG(void)
  {
      LED_Init();
-     WDOG_InitConfig(1, 2);
+     WDOG_InitConfig(1000, 2000);
      
      // 优先级配置 抢占优先级5  子优先级0   越小优先级越高  抢占优先级高的可打断抢占优先级低的中断
      NVIC_SetPriority(WDT_BOD_IRQn,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),5,0));
      EnableIRQ(WDT_BOD_IRQn);  //使能中断
-     
-     /* 喂狗 */
-     WWDT_Refresh(WWDT);
-     
+      
      /* */
      while(1);
      

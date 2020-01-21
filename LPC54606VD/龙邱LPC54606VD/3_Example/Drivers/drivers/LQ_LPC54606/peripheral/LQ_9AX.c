@@ -628,15 +628,14 @@ uint8_t FX_Write_Byte(uint8_t addr,uint8_t reg,uint8_t value)
 }
 
 /*!
-  * @brief    IIC 写一个寄存器
+  * @brief    IIC 读一个寄存器
   *
   * @param    addr  :器件地址 
-  * @param    reg   :要写的寄存器地址
-  * @param    value :要写入的值
+  * @param    reg   :要读的寄存器地址
   *
   * @return   0 ：读取成功
   *
-  * @note     移植时如果使用硬件IIC 需要修改这里
+  * @note     移植时如果使用模拟IIC 需要修改这里
   *
   * @see      FX_Read_Byte(FXAS21002C_ADDR, FXAS21002C_WHO_AM_I); //读一个寄存器
   *
@@ -700,11 +699,10 @@ uint8_t FX_Write_Byte(uint8_t addr,uint8_t reg,uint8_t value)
 
 
 /*!
-  * @brief    IIC 写一个寄存器
+  * @brief    IIC 读一个寄存器
   *
   * @param    addr  :器件地址 
-  * @param    reg   :要写的寄存器地址
-  * @param    value :要写入的值
+  * @param    reg   :要读的寄存器地址
   *
   * @return   0 ：读取成功
   *

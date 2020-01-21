@@ -72,7 +72,6 @@ void MRT_InitConfig(mrt_chnl_t channel, uint32_t us)
     
     //微秒，ticksINTVAL最大值为0xFFFFFFU  
     MRT_StartTimer(MRT0, channel, USEC_TO_COUNT(us, mrt_clock));
-    //毫秒
-    //MRT_StartTimer(MRT0, channel, MSEC_TO_COUNT(250000U, mrt_clock));   
+ 
 }
 

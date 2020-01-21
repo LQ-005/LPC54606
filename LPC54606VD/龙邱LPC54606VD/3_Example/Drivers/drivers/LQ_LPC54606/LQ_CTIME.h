@@ -70,8 +70,8 @@ typedef enum
     CT1Input2_P1_13 = 0x0600 + 1,                                    /*!< CTIMER1 输入通道2管脚  */  
     CT1Input3_P1_15 = 0x0700 + 1,                                    /*!< CTIMER1 输入通道3管脚  */  
 	
-    CT2Input0_P0_24 = 0x0800 + 1,                                    /*!< CTIMER2 输入通道0管脚 */  
-    CT2Input1_P0_25 = 0x0900 + 1,                                    /*!< CTIMER2 输入通道1管脚 */  
+    CT2Input0_P0_24 = 0x0800 + 1,                                    /*!< CTIMER2 输入通道0管脚  */  
+    CT2Input1_P0_25 = 0x0900 + 1,                                    /*!< CTIMER2 输入通道1管脚  */  
     CT2Input2_P0_10 = 0x0A00 + 1,                                    /*!< CTIMER2 输入通道2管脚  */  
     CT2Input3_P0_28 = 0x0B00 + 1,                                    /*!< CTIMER2 输入通道3管脚  */
 	                                                                    

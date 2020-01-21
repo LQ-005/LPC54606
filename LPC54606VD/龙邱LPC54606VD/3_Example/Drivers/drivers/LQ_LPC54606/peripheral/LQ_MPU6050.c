@@ -378,7 +378,7 @@ uint8_t MPU_Write_Byte(uint8_t addr,uint8_t reg,uint8_t value)
   * @brief    IIC 读一个寄存器
   *
   * @param    addr  :器件地址 
-  * @param    reg   :要写的寄存器地址
+  * @param    reg   :寄存器地址
   *
   * @return   读取的值
   *
@@ -428,7 +428,7 @@ uint8_t MPU_Read_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf)
   * @brief    IIC 写一个寄存器
   *
   * @param    addr  :器件地址 
-  * @param    reg   :要写的寄存器地址
+  * @param    reg   :寄存器地址
   * @param    value :要写入的值
   *
   * @return   0 ：读取成功
@@ -449,7 +449,7 @@ uint8_t MPU_Write_Byte(uint8_t addr,uint8_t reg,uint8_t value)
   * @brief    IIC 读一个寄存器
   *
   * @param    addr  :器件地址 
-  * @param    reg   :要写的寄存器地址
+  * @param    reg   :寄存器地址
   *
   * @return   读取的值
   *

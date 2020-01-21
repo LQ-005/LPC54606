@@ -24,21 +24,21 @@
 /*!
   * @brief    看门狗初始化
   *
-  * @param    min_s    ：窗口下限时间 单位 s
-  * @param    max_s    ：窗口上限时间 单位 s
+  * @param    min_ms    ：窗口下限时间 单位 ms
+  * @param    max_ms    ：窗口上限时间 单位 ms
   *
   * @return   无
   *
-  * @note     无
+  * @note     wwdt是一个24位的定时器 默认时钟125KHz  max_ms最大 134217
   *
-  * @see      WDOG_InitConfig(2, 5); //设置看门狗 在2-5S内喂狗
+  * @see      WDOG_InitConfig(2000, 5000); //设置看门狗 在2-5S内喂狗
   * @see      优先级配置 抢占优先级5  子优先级0   越小优先级越高  抢占优先级高的可打断抢占优先级低的中断
   * @see      NVIC_SetPriority(WDT_BOD_IRQn,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),5,0));
   * @see      EnableIRQ(WDT_BOD_IRQn);  //使能中断
   *
   * @date     2019/10/19 星期六
   */
-void WDOG_InitConfig(uint8_t min_s, uint8_t max_s);
+void WDOG_InitConfig(uint32_t min_ms, uint32_t max_ms);
 
 
 

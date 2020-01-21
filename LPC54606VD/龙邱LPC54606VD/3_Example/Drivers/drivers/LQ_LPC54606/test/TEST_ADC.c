@@ -28,7 +28,6 @@
 /* 声明外部延时函数 */
 extern void delayms(uint16_t ms);
 
-
 #ifdef TFT1_8
 /*!
   * @brief    测试母板上的ADC接口
@@ -157,7 +156,8 @@ void TEST_ADC(void)
     char txt[32];
     uint8_t key = 0;
     while (1)
-    {           
+    {      
+		
         /* 这里乘以0.5 做一个简单的低通滤波 防止数据跳动太快 屏幕看不清楚 */
         batv1 = (uint16_t)(batv1*0.5 + 0.5*ADC_Read(ADC0CH4_P0_16)*0.806);            
         batv2 = (uint16_t)(batv2*0.5 + 0.5*ADC_Read(ADC0CH6_P1_0)*0.806);            

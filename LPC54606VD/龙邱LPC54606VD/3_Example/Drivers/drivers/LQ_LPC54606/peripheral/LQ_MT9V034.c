@@ -126,7 +126,7 @@ void LQMT9V034_Init(uint8_t fps)
     
         
     /* 0xA5  ÕºœÒ¡¡∂»  60  1-64  */
-    SCCB_RegWrite(MT9V034_I2C_ADDR,MT9V034_AGC_AEC_DESIRED_BIN_REG, 30); 
+    SCCB_RegWrite(MT9V034_I2C_ADDR,MT9V034_AGC_AEC_DESIRED_BIN_REG, CAMERA_AUTO_EXPOSURE_BRIGHTNESS); 
         
 }
 
